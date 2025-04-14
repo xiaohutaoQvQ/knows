@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+正在加载......请稍候
+</body>
+
+<script src="bower_components/jquery/dist/jquery.js" ></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.js" ></script>
+<!--引入CDN服务器的框架文件-->
+<script src="bower_components/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script>
+    // 利用jQuery提供的页面加载完毕运行的方法,运行代码
+    $(function(){
+        // 获得localStorage中的jwt
+        let token=localStorage.getItem("accessToken");
+        // 将jwt token 输出到控制台
+        console.log(token);
+
+        axios({
+            url:"http://localhost:9000/v1/home",
+            method:"get",
+            params:{
+                accessToken:token
+            }
+        }).then(function(response){
+            // response.data就是HomeController响应的字符串
+            // 这个字符串是根据用户身份返回的首页路径
+            // 直接重定向到这个路径,就可以访问对应身份的首页
+            location.href=response.data;
+        })
+    })
+</script>

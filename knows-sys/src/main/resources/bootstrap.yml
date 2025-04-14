@@ -1,0 +1,21 @@
+server:
+  port: 8001
+spring:
+  application:
+    name: sys-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+      config:
+        # 指定配置中心的配置
+        server-addr: localhost:8848
+        # 编写读取的配置所在的组名
+        # 命名空间名称不用写,因为默认就是public
+        group: DEFAULT_GROUP
+        # 指定配置文件的后缀名
+        # 指定后缀名后,项目会从配置中心中自动读取对应的配置
+        #  [项目名称] . [后缀名称]  构成的DataId,作为读取的配置文件
+        # sys-service.properties
+        file-extension: properties
+

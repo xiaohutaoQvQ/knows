@@ -1,0 +1,12 @@
+###
+GET http://localhost:9200
+
+###
+POST http://localhost:9200/_analyze
+Content-Type: application/json
+
+
+{
+"text": " 运筹帷幄之间决胜千里之外",
+  "analyzer": "ik_smart"
+}

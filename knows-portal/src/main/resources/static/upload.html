@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>文件上载演示</title>
+  <script src="bower_components/jquery/dist/jquery.min.js" ></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.min.js" ></script>
+  <script src="bower_components/vue/dist/vue.js"></script>
+  <!--引入CDN服务器的框架文件-->
+  <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+</head>
+<body>
+<form id="demoForm" method="post"
+      enctype="multipart/form-data"
+      action="/upload/file" >
+  <div>
+    <label>上传文件
+      <input id="imageFile" type="file" name="imageFile">
+    </label>
+  </div>
+  <button type="submit">上传文件</button>
+</form>
+<img id="image" src="http://localhost:8899/a.jpg"  alt="">
+<script>
+  // 我们编写jQuery代码,在表单提交时触发编写好的代码,并阻止表单原有的提交效果
+  $("#demoForm").submit(function(){
+    // 这个方法会在id为demoForm的表单提交时运行
+    // 编写代码获得用户选中的文件\图片
+    let files=document.getElementById("imageFile").files;
+    // 判断是否选中了文件
+    if(files.length>0){
+      // 将用户选中的文件传给自定义方法完成上传
+      uploadFile(files[0]);
+    }else{
+      alert("请选择要上传的文件\图片");
+    }
+    // jQuery的功能,返回false表示阻止表单提交
+    return false;
+  })
+
+  function uploadFile(file){
+    let form=new FormData();
+    form.append("imageFile",file);
+    axios({
+      url:"/upload/file",
+      method:"post",
+      data:form
+    }).then(function (response){
+      console.log(response.data);
+      // 将上传图片显示用的url赋值给img标签的src属性
+      $("#image").attr("src",response.data);
+    })
+  }
+
+
+</script>
+</body>
+</html>
+

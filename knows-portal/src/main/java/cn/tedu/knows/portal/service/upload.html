@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>文件上载演示</title>
+  <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="bower_components/vue/dist/vue.js"></script>
+  <!--引入CDN服务器的框架文件-->
+  <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+</head>
+<body>
+<form id="demoForm" method="post"
+      enctype="multipart/form-data"
+      action="/upload/file" >
+  <div>
+    <label>上传文件
+      <input id="imageFile" type="file" name="imageFile">
+    </label>
+  </div>
+  <button type="submit">上传文件</button>
+</form>
+<img id="image" src=""  alt="">
+<script>
+  //我们编写jQuery代码 在表单提交时触发编写好的代码
+  $("#demoForm").submit(function (){
+    let files = document.getElementById("imageFile").files;
+    if (files.length>0){
+      uploadFile(filse[0])
+    }else {
+      alert("请选择文件")
+    }
+    return false
+  })
+
+  function uploadFile(file){
+    let form=new FormData();
+    form.append("imageFile",file);
+    axios({url:"/upload/file",method:"post",data:form}).then(function (response) {
+      console.log(response)
+    })
+
+  }
+</script>
+</body>
+</html>
+
